@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kevin Madrid | Embedded Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --indigo: #4361ee;
+      --indigo-mid: #3a0ca3;
+      --indigo-lt: #4cc9f0;
+      --indigo-bg: #eef2ff;
+      --indigo-bg2: #e8edff;
+      --page-bg: #f5f7ff;
+      --white: #ffffff;
+      --ink: #0d1b4b;
+      --ink-mid: #354580;
+      --ink-dim: #7a8bbf;
+      --accent: #4361ee;
+      --accent2: #4cc9f0;
+      --accent3: #f72585;
+      --green: #06d6a0;
+      --border: rgba(67, 97, 238, 0.15);
+      --shadow: 0 4px 24px rgba(67, 97, 238, 0.10);
+      --shadow-lg: 0 8px 40px rgba(67, 97, 238, 0.18);
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'DM Sans', sans-serif;
+      --font-head: 'Syne', sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(67, 97, 238, 0.07);
+      padding: 0 2.5rem;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--indigo);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent3);
+      display: inline-block;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: var(--ink-dim);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    nav button:hover {
+      color: var(--indigo);
+      background: var(--indigo-bg);
+    }
+
+    nav button.active {
+      color: white;
+      background: var(--indigo);
+      font-weight: 500;
+    }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 45%, #4cc9f0 100%);
+      padding: 5rem 3rem 4rem;
+      overflow: hidden;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* floating circles */
+    .hero-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hc1 {
+      width: 500px;
+      height: 500px;
+      top: -200px;
+      right: -100px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .hc2 {
+      width: 300px;
+      height: 300px;
+      bottom: -120px;
+      left: 30%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hc3 {
+      width: 160px;
+      height: 160px;
+      top: 30px;
+      left: 55%;
+      background: rgba(76, 201, 240, 0.15);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: riseIn 0.5s ease forwards 0.1s;
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.08;
+      color: #fff;
+      letter-spacing: -1px;
+      opacity: 0;
+      animation: riseIn 0.5s ease forwards 0.25s;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.78);
+      max-width: 560px;
+      line-height: 1.7;
+      font-weight: 300;
+      opacity: 0;
+      animation: riseIn 0.5s ease forwards 0.4s;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.6rem;
+      opacity: 0;
+      animation: riseIn 0.5s ease forwards 0.55s;
+    }
+
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: riseIn 0.5s ease forwards 0.7s;
+    }
+
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--indigo);
+      border: none;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-white:hover {
+      background: var(--indigo-bg);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* ── MAIN ──────────────────────────────────────────── */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem 5rem;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn 0.35s ease;
+    }
+
+    /* ── SECTION HEADER ────────────────────────────────── */
+    .sec-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .sec-title {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--indigo);
+      background: var(--indigo-bg);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    /* ── CARDS ─────────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .card-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 2.5px;
+      color: var(--indigo);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-label::before {
+      content: '';
+      width: 18px;
+      height: 2px;
+      background: var(--indigo);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── NEWS ──────────────────────────────────────────── */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .news-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .news-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+
+    .news-head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .news-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .news-channel-name {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .news-live {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 1px;
+      color: var(--green);
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    .news-body {
+      padding: 0.4rem 0;
+    }
+
+    .news-item {
+      padding: 0.7rem 1.1rem;
+      border-bottom: 1px solid rgba(67, 97, 238, 0.05);
+      transition: background 0.15s;
+    }
+
+    .news-item:last-child {
+      border-bottom: none;
+    }
+
+    .news-item:hover {
+      background: var(--indigo-bg);
+    }
+
+    .news-item a {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.4;
+      margin-bottom: 0.2rem;
+      transition: color 0.15s;
+    }
+
+    .news-item a:hover {
+      color: var(--indigo);
+    }
+
+    .news-item .date {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.5px;
+    }
+
+    .news-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      color: var(--ink-dim);
+      gap: 0.5rem;
+    }
+
+    .loading-dots span {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--indigo);
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    /* ── ABOUT ─────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .timeline {
+      list-style: none;
+    }
+
+    .timeline li {
+      position: relative;
+      padding: 0 0 1.5rem 1.5rem;
+      border-left: 2px solid var(--indigo-bg2);
+    }
+
+    .timeline li:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline li::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 5px;
+      width: 8px;
+      height: 8px;
+      background: var(--indigo);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--indigo-bg);
+    }
+
+    .tl-role {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--ink);
+    }
+
+    .tl-company {
+      font-family: var(--font-mono);
+      font-size: 0.67rem;
+      color: var(--indigo);
+      letter-spacing: 1px;
+      margin: 0.15rem 0;
+    }
+
+    .tl-date {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--ink-dim);
+    }
+
+    .tl-desc {
+      font-size: 0.83rem;
+      color: var(--ink-mid);
+      margin-top: 0.35rem;
+      line-height: 1.55;
+    }
+
+    /* ── SKILLS ────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .skill-row {
+      margin-bottom: 1.1rem;
+    }
+
+    .skill-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      color: var(--ink);
+      margin-bottom: 0.45rem;
+    }
+
+    .skill-top span {
+      color: var(--indigo);
+      font-weight: 700;
+    }
+
+    .skill-track {
+      height: 5px;
+      background: var(--indigo-bg2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--indigo-mid), var(--indigo), var(--indigo-lt));
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.3rem;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.8px;
+      padding: 0.28rem 0.65rem;
+      border-radius: 100px;
+      background: var(--indigo-bg);
+      color: var(--indigo);
+      border: 1px solid rgba(67, 97, 238, 0.18);
+      transition: all 0.15s;
+    }
+
+    .tag:hover {
+      background: var(--indigo);
+      color: #fff;
+    }
+
+    /* ── PROJECTS ──────────────────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .proj-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .proj-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--indigo-mid), var(--indigo), var(--indigo-lt));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .proj-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+
+    .proj-card:hover::after {
+      opacity: 1;
+    }
+
+    .proj-num {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--ink-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .proj-title {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.2px;
+    }
+
+    .proj-desc {
+      font-size: 0.86rem;
+      color: var(--ink-mid);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .proj-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.8px;
+      padding: 0.22rem 0.55rem;
+      border-radius: 4px;
+      background: var(--indigo-bg);
+      color: var(--indigo);
+    }
+
+    /* ── CONTACT ───────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.4rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      transition: all 0.2s;
+    }
+
+    .contact-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+      border-color: var(--indigo);
+    }
+
+    .c-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--indigo-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .c-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+    }
+
+    .c-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 0.15rem;
+    }
+
+    .resume-banner {
+      background: linear-gradient(135deg, #3a0ca3, #4361ee 60%, #4cc9f0);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .resume-banner::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .resume-banner h3 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .resume-banner p {
+      font-size: 0.9rem;
+      opacity: 0.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-dark {
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .btn-dark:hover {
+      background: #1a2c6b;
+      transform: translateY(-1px);
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────────── */
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.85);
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-6px);
+      }
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 768px) {
+      header {
+        padding: 0 1rem;
+      }
+
+      .logo {
+        font-size: 1rem;
+      }
+
+      nav button {
+        font-size: 0.6rem;
+        padding: 0.4rem 0.6rem;
+      }
+
+      .hero {
+        padding: 3rem 1.4rem;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 2rem 1.2rem 4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="logo-dot"></div>
+      Kevin Madrid
+    </div>
+    <nav>
+      <button class="active" onclick="show('home',this)">Home</button>
+      <button onclick="show('about',this)">About</button>
+      <button onclick="show('skills',this)">Skills</button>
+      <button onclick="show('projects',this)">Projects</button>
+      <button onclick="show('contact',this)">Contact</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-circle hc1"></div>
+    <div class="hero-circle hc2"></div>
+    <div class="hero-circle hc3"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Senior Embedded Software Engineer · 13 Years</div>
+      <h1>Kevin Adonai<br><em>Madrid López</em></h1>
+      <p class="hero-sub">Automotive-grade embedded Linux systems, Telematics, Cybersecurity cryptography, and real-time
+        CAN networks. US Patent holder. Open-source advocate.</p>
+      <div class="hero-chips">
+        <span class="chip">Linux</span><span class="chip">C / C++</span><span class="chip">Python</span>
+        <span class="chip">Bash</span><span class="chip">Assembly</span><span class="chip">CAN Bus</span>
+        <span class="chip">MQTT</span><span class="chip">Cybersecurity</span><span class="chip">ARM</span>
+        <span class="chip">Telematics</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="Kevin_Madrid_Resume_2026.pdf" download class="btn btn-white">⬇ Download Resume</a>
+        <a href="https://www.linkedin.com/in/kevin-madrid-a56a4350/" target="_blank" class="btn btn-ghost">LinkedIn
+          ↗</a>
+        <a href="#" class="btn btn-ghost">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- HOME: NEWS -->
+    <div id="home" class="section active">
+      <div class="sec-head">
+        <span class="sec-title">Live Tech Feed</span>
+        <span class="sec-num">RSS // LIVE</span>
+      </div>
+      <div class="news-grid" id="newsGrid"></div>
+    </div>
+
+    <!-- ABOUT -->
+    <div id="about" class="section">
+      <div class="sec-head">
+        <span class="sec-title">About Me</span>
+        <span class="sec-num">01</span>
+      </div>
+      <div class="about-grid">
+        <div class="card">
+          <div class="card-label">Profile</div>
+          <p style="font-size:0.97rem;line-height:1.8;color:var(--ink-mid);">Senior Embedded Software Engineer with 13
+            years of experience in the automotive industry. I specialize in Linux-based embedded systems, C/C++,
+            platform integration, and debugging complex issues in production environments.</p>
+          <br>
+          <p style="font-size:0.97rem;line-height:1.8;color:var(--ink-mid);">Proven leadership in software architecture,
+            Cybersecurity compliance, and customer-facing technical communication. Deep expertise in Telematics,
+            real-time systems, and cryptographic security (ECDSA-P384, AES-GCM-256, SHA-384).</p>
+          <br>
+          <p style="font-size:0.97rem;line-height:1.8;color:var(--ink-mid);">I hold two patents — one US and one Mexican
+            — for innovative hand-gesture vehicle control interfaces, and am a certified Scrum Master with specialized
+            Linux Kernel Driver Development training from Bootlin.</p>
+          <br>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+            <span class="tag">Royal Oak, Michigan</span>
+            <span class="tag">English · Spanish</span>
+            <span class="tag">BS Electronic Engineering</span>
+            <span class="tag">ITESM · 2013</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Experience</div>
+          <ul class="timeline">
+            <li>
+              <div class="tl-role">Sr. Software Engineer</div>
+              <div class="tl-company">Continental CES</div>
+              <div class="tl-date">JAN 2019 — JUL 2025 · USA</div>
+              <div class="tl-desc">Led Cybersecurity CVE integration, cryptographic OTA security, remote CAN command
+                features, and customer triage for Telematics production issues.</div>
+            </li>
+            <li>
+              <div class="tl-role">Software Integration Engineer</div>
+              <div class="tl-company">FCA (Stellantis)</div>
+              <div class="tl-date">SEP 2018 — JAN 2019 · USA</div>
+              <div class="tl-desc">Collaborated on software design work products from OEM requirements to be shared with
+                suppliers.</div>
+            </li>
+            <li>
+              <div class="tl-role">Sr. Software Engineer</div>
+              <div class="tl-company">Continental Mexico</div>
+              <div class="tl-date">SEP 2017 — SEP 2018 · Mexico</div>
+              <div class="tl-desc">Debugged production Telematics issues with minimal initial information. Assisted
+                architects porting projects to new platforms and mentored new team members.</div>
+            </li>
+            <li>
+              <div class="tl-role">Full Software Engineer</div>
+              <div class="tl-company">Continental Mexico</div>
+              <div class="tl-date">AUG 2014 — SEP 2017 · Mexico</div>
+              <div class="tl-desc">Ported UART communication protocols, developed MQTT-based diagnostic modules, and
+                created Python log-parsing scripts.</div>
+            </li>
+            <li>
+              <div class="tl-role">Jr. Software Engineer → Intern</div>
+              <div class="tl-company">Continental Mexico</div>
+              <div class="tl-date">JUN 2012 — AUG 2014 · Mexico</div>
+              <div class="tl-desc">Designed UML software modules, developed unit tests, and built an EEG-based vehicle
+                radio prototype using NeuroSky Bluetooth technology.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div id="skills" class="section">
+      <div class="sec-head">
+        <span class="sec-title">Skills</span>
+        <span class="sec-num">02</span>
+      </div>
+      <div class="skills-grid">
+        <div class="card">
+          <div class="card-label">Languages</div>
+          <div class="skill-row">
+            <div class="skill-top">C / C++ <span>95%</span></div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="95"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">Python <span>85%</span></div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="85"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">Bash / Shell <span>88%</span></div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="88"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">Assembly <span>70%</span></div>
+            <div class="skill-track">
+              <div class="skill-fill" data-w="70"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Platforms & Tools</div>
+          <div class="tag-wrap">
+            <span class="tag">Linux</span><span class="tag">RTOS</span><span class="tag">ARM</span>
+            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Gerrit</span>
+            <span class="tag">GNU Build</span><span class="tag">Makefiles</span><span class="tag">Geny</span>
+            <span class="tag">Candela</span><span class="tag">CANoe</span><span class="tag">UML</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Protocols & Interfaces</div>
+          <div class="tag-wrap">
+            <span class="tag">CAN Bus</span><span class="tag">UART</span><span class="tag">MQTT</span>
+            <span class="tag">Bluetooth</span><span class="tag">ECDSA-P384</span>
+            <span class="tag">AES-GCM-256</span><span class="tag">SHA-384</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Methodologies</div>
+          <div class="tag-wrap">
+            <span class="tag">Embedded Systems</span><span class="tag">Multi-threading</span>
+            <span class="tag">Cybersecurity</span><span class="tag">CVE Triage</span>
+            <span class="tag">Agile / Scrum</span><span class="tag">V-Cycle</span>
+            <span class="tag">Software Architecture</span><span class="tag">Debugging</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Certifications</div>
+          <ul class="timeline">
+            <li>
+              <div class="tl-role">Linux Kernel Driver Development</div>
+              <div class="tl-company">Bootlin Training</div>
+              <div class="tl-date">November 2021</div>
+            </li>
+            <li>
+              <div class="tl-role">Scrum Master Certification</div>
+              <div class="tl-company">Scrum Alliance</div>
+              <div class="tl-date">July 2014</div>
+            </li>
+            <li>
+              <div class="tl-role">Scrum Bootcamp</div>
+              <div class="tl-company">Abiztar</div>
+              <div class="tl-date">June 2015</div>
+            </li>
+          </ul>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--indigo);">
+          <div class="card-label">Patents 🏆</div>
+          <ul class="timeline">
+            <li>
+              <div class="tl-role">Hands Accelerating Control System</div>
+              <div class="tl-company">US Patent US9315197 B1 · April 2016</div>
+              <div class="tl-desc">Hand gesture interface for vehicle acceleration systems using EEG and sensor fusion.
+              </div>
+            </li>
+            <li>
+              <div class="tl-role">Touchless Control of Telematics Module</div>
+              <div class="tl-company">Mexico Patent · 2016</div>
+              <div class="tl-desc">Gesture-based HMI for vehicle telematics modules.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div id="projects" class="section">
+      <div class="sec-head">
+        <span class="sec-title">Projects</span>
+        <span class="sec-num">03</span>
+      </div>
+      <div class="projects-grid">
+        <div class="proj-card">
+          <div class="proj-num">01 / SECURITY</div>
+          <div class="proj-title">Telematics CVE Security Suite</div>
+          <p class="proj-desc">Led Cybersecurity CVE integration for automotive Telematics platform. Implemented
+            cryptographic security for OTA software updates using ECDSA-P384, AES-GCM-256, and SHA-384 verification to
+            protect against supply chain attacks.</p>
+          <div class="proj-tags"><span class="proj-tag">C</span><span class="proj-tag">Cybersecurity</span><span
+              class="proj-tag">Cryptography</span><span class="proj-tag">Linux</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">02 / SYSTEMS</div>
+          <div class="proj-title">Remote CAN Command Gateway</div>
+          <p class="proj-desc">Designed and implemented a remote command feature receiving execution instructions from a
+            cloud back-end and propagating them reliably to the vehicle CAN network for real-time automotive subsystem
+            control.</p>
+          <div class="proj-tags"><span class="proj-tag">C</span><span class="proj-tag">CAN Bus</span><span
+              class="proj-tag">MQTT</span><span class="proj-tag">Linux</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">03 / DIAGNOSTICS</div>
+          <div class="proj-title">MQTT Diagnostic Config Module</div>
+          <p class="proj-desc">Cloud-controlled diagnostic configuration module built with a state-machine design in C.
+            Developed isolated unit tests and Python log-parsing scripts for field debugging.</p>
+          <div class="proj-tags"><span class="proj-tag">C</span><span class="proj-tag">Python</span><span
+              class="proj-tag">MQTT</span><span class="proj-tag">State Machine</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">04 / INNOVATION · PATENT</div>
+          <div class="proj-title">EEG Vehicle Radio Controller</div>
+          <p class="proj-desc">Prototype alternative control interface for vehicle radios using EEG signals from
+            NeuroSky technology, implemented in C with Bluetooth data gathering. Led to US Patent US9315197 B1.</p>
+          <div class="proj-tags"><span class="proj-tag">C</span><span class="proj-tag">Bluetooth</span><span
+              class="proj-tag">EEG</span><span class="proj-tag">Patent</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">05 / TESTING</div>
+          <div class="proj-title">Lift-Gate Crane Test Framework</div>
+          <p class="proj-desc">Designed an automated test framework to validate lift-gate crane movement logic per OEM
+            specifications, enabling reliable validation of complex mechanical actuation sequences.</p>
+          <div class="proj-tags"><span class="proj-tag">C</span><span class="proj-tag">Bash</span><span
+              class="proj-tag">Test Automation</span><span class="proj-tag">Automotive</span></div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-num">06 / CONNECTIVITY</div>
+          <div class="proj-title">UART Cloud-to-CAN Gateway</div>
+          <p class="proj-desc">Ported and maintained UART-based communication protocols serving as the primary
+            cloud-to-CAN gateway across both Linux-based and RTOS platforms for multiple OEM customers.</p>
+          <div class="proj-tags"><span class="proj-tag">C</span><span class="proj-tag">UART</span><span
+              class="proj-tag">RTOS</span><span class="proj-tag">Linux</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div id="contact" class="section">
+      <div class="sec-head">
+        <span class="sec-title">Contact</span>
+        <span class="sec-num">04</span>
+      </div>
+      <div class="contact-grid">
+        <a href="mailto:kevin.madrid.lopez@gmail.com" class="contact-card">
+          <div class="c-icon">✉️</div>
+          <div>
+            <div class="c-label">Email</div>
+            <div class="c-value">kevin.madrid.lopez@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+12485616977" class="contact-card">
+          <div class="c-icon">📞</div>
+          <div>
+            <div class="c-label">Phone</div>
+            <div class="c-value">248-561-6977</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/kevin-madrid-a56a4350/" target="_blank" class="contact-card">
+          <div class="c-icon"
+            style="background:#e8f0fe;font-family:var(--font-mono);font-size:0.7rem;color:var(--indigo);font-weight:700;">
+            in</div>
+          <div>
+            <div class="c-label">LinkedIn</div>
+            <div class="c-value">kevin-madrid-a56a4350</div>
+          </div>
+        </a>
+        <a href="#" class="contact-card">
+          <div class="c-icon"
+            style="font-family:var(--font-mono);font-size:0.68rem;color:var(--ink);background:var(--indigo-bg);">
+            &lt;/&gt;</div>
+          <div>
+            <div class="c-label">GitHub</div>
+            <div class="c-value">github.com/kevin-madrid</div>
+          </div>
+        </a>
+      </div>
+      <div class="resume-banner">
+        <h3>Resume Available</h3>
+        <p>13 years of embedded engineering experience — download the full PDF.</p>
+        <a href="Kevin_Madrid_Resume_2026.pdf" download class="btn-dark">⬇ Download PDF Resume</a>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function show(id, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+      if (id === 'skills') setTimeout(animateBars, 100);
+    }
+
+    function animateBars() {
+      document.querySelectorAll('.skill-fill').forEach(b => {
+        b.style.width = b.dataset.w + '%';
+      });
+    }
+
+    // ── RSS FEED ─────────────────────────────────────────────
+    const feeds = [
+      {
+        title: 'Linux Kernel', icon: '🐧', color: '#f5a623', bg: '#fff8ec',
+        urls: ['https://lwn.net/headlines/rss', 'https://lkml.org/lkml.rss']
+      },
+      {
+        title: 'Android', icon: '🤖', color: '#3ddc84', bg: '#edfff6',
+        urls: ['https://android-developers.googleblog.com/feeds/posts/default']
+      },
+      {
+        title: 'Linux Distros', icon: '💿', color: '#4361ee', bg: '#eef2ff',
+        urls: ['https://www.omgubuntu.co.uk/feed', 'https://fedoramagazine.org/feed/']
+      },
+      {
+        title: 'AI / ML', icon: '🧠', color: '#9b5de5', bg: '#f5eeff',
+        urls: ['https://ai.googleblog.com/feeds/posts/default']
+      },
+      {
+        title: 'Embedded World', icon: '⚙️', color: '#f72585', bg: '#fff0f7',
+        urls: ['https://www.embedded.com/rss/']
+      }
+    ];
+
+    const PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
+
+    function fmtDate(s) {
+      try { return new Date(s).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+      catch { return ''; }
+    }
+
+    function buildCard(f, items) {
+      const card = document.createElement('div');
+      card.className = 'news-card';
+      const itemsHtml = items
+        ? items.slice(0, 5).map(i => `
+        <div class="news-item">
+          <a href="${i.link}" target="_blank" rel="noopener">${i.title}</a>
+          <div class="date">${fmtDate(i.pubDate)}</div>
+        </div>`).join('')
+        : `<div class="news-item"><a href="#" style="color:var(--ink-dim)">Could not load feed — check back shortly</a></div>
+       <div class="news-item"><a href="https://lwn.net" target="_blank">lwn.net ↗</a></div>
+       <div class="news-item"><a href="https://www.phoronix.com" target="_blank">phoronix.com ↗</a></div>
+       <div class="news-item"><a href="https://www.embedded.com" target="_blank">embedded.com ↗</a></div>`;
+
+      card.innerHTML = `
+    <div class="news-head">
+      <div class="news-icon" style="background:${f.bg};font-size:1rem;">${f.icon}</div>
+      <div class="news-channel-name">${f.title}</div>
+      <div class="news-live"><div class="live-dot"></div> Live</div>
+    </div>
+    <div class="news-body">${itemsHtml}</div>`;
+      return card;
+    }
+
+    async function loadNews() {
+      const grid = document.getElementById('newsGrid');
+
+      // placeholders
+      const placeholders = feeds.map(f => {
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        card.innerHTML = `
+      <div class="news-head">
+        <div class="news-icon" style="background:${f.bg};">${f.icon}</div>
+        <div class="news-channel-name">${f.title}</div>
+      </div>
+      <div class="news-loading">Loading <div class="loading-dots"><span></span><span></span><span></span></div></div>`;
+        grid.appendChild(card);
+        return card;
+      });
+
+      await Promise.all(feeds.map(async (f, i) => {
+        let items = null;
+        for (const url of f.urls) {
+          try {
+            const r = await fetch(PROXY + encodeURIComponent(url));
+            if (!r.ok) continue;
+            const d = await r.json();
+            if (d.status === 'ok' && d.items?.length) { items = d.items; break; }
+          } catch { }
+        }
+        grid.replaceChild(buildCard(f, items), placeholders[i]);
+      }));
+    }
+
+    loadNews();
+  </script>
+</body>
+
+</html>
